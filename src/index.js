@@ -53,13 +53,14 @@ class RoosterReact extends React.PureComponent {
 
     render() {
         let plugins = getPlugins();
-        const { classes } = this.props;
+        const { classes, ribbonButtons } = this.props;
         return (
             <div className={classes.root}>
                 {this.state.showRibbon && (
                     <Ribbon
                         plugin={plugins.ribbon}
                         className={classes.noGrow}
+                        ribbonButtons={ribbonButtons}
                         ref={plugins.ribbon.refCallback}
                     />
                 )}

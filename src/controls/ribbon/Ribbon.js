@@ -11,18 +11,20 @@ import styles from './RibbonStyles';
 
 class Ribbon extends React.Component {
     render() {
-        let plugin = this.props.plugin;
-        let editor = plugin.getEditor();
-        let format = editor && getFormatState(editor);
+        const plugin = this.props.plugin;
+        const editor = plugin.getEditor();
+        const format = editor && getFormatState(editor);
+        const button = {...ribbonButtons, ...this.props.ribbonButtons};
+
         const { classes } = this.props;
         return (
             <div className={classes.ribbon + ' ' + (this.props.className || '')}>
-                {Object.keys(ribbonButtons).map(key => (
+                {Object.keys(button).map(key => (
                     <RibbonButton
                         key={key}
                         plugin={plugin}
                         format={format}
-                        button={ribbonButtons[key]}
+                        button={button[key]}
                         onClicked={this.onButtonClicked}
                     />
                 ))}
