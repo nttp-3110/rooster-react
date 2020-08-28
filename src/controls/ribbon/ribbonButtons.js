@@ -1,6 +1,7 @@
 import renderInsertLinkDialog from './renderInsertLinkDialog';
 import renderTableOptions from './renderTableOptions';
 import { Alignment, Direction, Indentation } from 'roosterjs-editor-types';
+import renderKatexDialog from '../katex/renderKatexDialog';
 import {
     setBackgroundColor,
     setFontName,
@@ -235,6 +236,14 @@ const buttons = {
         title: 'Right-to-left',
         image: require('./svg/rtl.svg'),
         onClick: editor => setDirection(editor, Direction.RightToLeft),
+    },
+    formular: {
+        title: 'Formula',
+        image: require('./svg/formula.svg'),
+        onClick: null,
+        dropDownItems: { '0': 'dummy' },
+        dropDownRenderer: renderKatexDialog,
+        preserveOnClickAway: true,
     },
     undo: {
         title: 'Undo',

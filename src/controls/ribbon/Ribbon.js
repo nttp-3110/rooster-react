@@ -1,22 +1,22 @@
 import * as React from 'react';
-// import MainPaneBase from '../MainPaneBase';
+import { withStyles } from '@material-ui/core/styles';
 import RibbonButton from './RibbonButton';
 import ribbonButtons from './ribbonButtons';
-// import RibbonPlugin from './RibbonPlugin';
-import { Browser } from 'roosterjs-editor-dom';
 import { getFormatState, rotateElement } from 'roosterjs-editor-api';
 import { QueryScope } from 'roosterjs-editor-types';
+import styles from './RibbonStyles';
 
-let styles = require('./Ribbon.css');
+// let styles = require('./Ribbon.css');
 
 
-export default class Ribbon extends React.Component {
+class Ribbon extends React.Component {
     render() {
         let plugin = this.props.plugin;
         let editor = plugin.getEditor();
         let format = editor && getFormatState(editor);
+        const { classes } = this.props;
         return (
-            <div className={styles.ribbon + ' ' + (this.props.className || '')}>
+            <div className={classes.ribbon + ' ' + (this.props.className || '')}>
                 {Object.keys(ribbonButtons).map(key => (
                     <RibbonButton
                         key={key}
@@ -26,21 +26,21 @@ export default class Ribbon extends React.Component {
                         onClicked={this.onButtonClicked}
                     />
                 ))}
-                <button onClick={this.onRotateImage} className={styles.textButton}>
+                {/* <button onClick={this.onRotateImage} className={classes.textButton}>
                     RotateImage
                 </button>
-                <button onClick={this.onSave} className={styles.textButton}>
+                <button onClick={this.onSave} className={classes.textButton}>
                     Export
-                </button>
-                <button onClick={this.onClear} className={styles.textButton}>
+                </button> */}
+                <button onClick={this.onClear} className={classes.textButton}>
                     Clear
                 </button>
-
+{/* 
                 {!this.props.isPopout && (Browser.isChrome || Browser.isFirefox) && (
                     <button onClick={this.onPopOut} className={styles.textButton}>
                         PopOut
                     </button>
-                )}
+                )} */}
             </div>
         );
     }
@@ -74,3 +74,4 @@ export default class Ribbon extends React.Component {
         this.forceUpdate();
     };
 }
+export default withStyles(styles)(Ribbon);

@@ -1,4 +1,5 @@
 import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
 // import BuildInPluginState from './BuildInPluginState';
 import Editor from './Editor';
 
@@ -7,8 +8,9 @@ import Ribbon from './controls/ribbon/Ribbon';
 import { getDefaultContentEditFeatures } from 'roosterjs-editor-plugins';
 
 import { getAllPluginArray, getPlugins } from './controls/plugins';
+import styles from './styles';
 
-const styles = require('./styles.css');
+// const styles = require('./styles.css');
 const PopoutRoot = 'mainPane';
 const POPOUT_HTML = `<!doctype html><html><head><title>RoosterJs Demo Page PopOut</title></head><body><div id=${PopoutRoot}></div></body></html>`;
 const POPOUT_FEATURES = 'menubar=no,statusbar=no,width=1200,height=800';
@@ -51,19 +53,20 @@ class RoosterReact extends React.PureComponent {
 
     render() {
         let plugins = getPlugins();
+        const { classes } = this.props;
         return (
-            <div className={styles.mainPane}>
-                {this.state.showRibbon && !this.state.isPopoutShown && (
+            <div className={classes.root}>
+                {this.state.showRibbon && (
                     <Ribbon
                         plugin={plugins.ribbon}
-                        className={styles.noGrow}
+                        className={classes.noGrow}
                         ref={plugins.ribbon.refCallback}
                     />
                 )}
-                <div className={styles.body}>
+                <div className={classes.body}>
                     <Editor
                         plugins={getAllPluginArray(this.state.showSidePane)}
-                        className={styles.editor}
+                        className={classes.editor}
                         ref={this.editor}
                         initState={initialState}
                         undo={plugins.snapshot}
@@ -161,4 +164,4 @@ class RoosterReact extends React.PureComponent {
     };
 }
 
-export default RoosterReact;
+export default withStyles(styles)(RoosterReact);

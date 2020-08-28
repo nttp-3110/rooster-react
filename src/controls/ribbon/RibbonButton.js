@@ -1,16 +1,16 @@
-import * as React from 'react';
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 // import MainPaneBase from '../MainPaneBase';
 // import RibbonButtonType, { DropDownRenderer } from './RibbonButtonType';
 // import RibbonPlugin from './RibbonPlugin';
 import { Browser } from 'roosterjs-editor-dom';
 // import { FormatState } from 'roosterjs-editor-types';
+import styles from './RibbonStyles';
 
-const styles = require('./RibbonButton.css');
 
-
-export default class RibbonButton extends React.Component {
+class RibbonButton extends React.Component {
     
-
     constructor(props) {
         super(props);
         this.state = {
@@ -22,7 +22,8 @@ export default class RibbonButton extends React.Component {
     render() {
         let button = this.props.button;
         let editor = this.props.plugin.getEditor();
-        let className = styles.button;
+        const { classes } = this.props;
+        let checked = false;
 
         if (
             editor &&
@@ -30,13 +31,13 @@ export default class RibbonButton extends React.Component {
             button.checked &&
             button.checked(this.props.format, editor)
         ) {
-            className += ' ' + styles.checked;
+            checked = true;
         }
         return (
-            <span className={styles.dropDownButton}>
+            <span className={classes.dropDownButton}>
                 <button
                     onClick={button.dropDownItems ? this.onShowDropDown : () => this.onExecute()}
-                    className={className}>
+                    className={clsx(classes.button, {[classes.checked]: checked})}>
                     <img src={button.image} width={32} height={32} title={button.title} alt='' />
                 </button>
                 {button.dropDownItems &&
@@ -83,8 +84,9 @@ export default class RibbonButton extends React.Component {
     };
 
     renderDropDownItems(items, renderer) {
+        const { classes } = this.props;
         return (
-            <div className={styles.dropDown}>
+            <div className={classes.dropDown}>
                 {Object.keys(items).map(key =>
                     renderer ? (
                         <div key={key}>
@@ -99,7 +101,7 @@ export default class RibbonButton extends React.Component {
                         <div
                             key={key}
                             onClick={() => this.onExecute(key)}
-                            className={styles.dropDownItem}>
+                            className={classes.dropDownItem}>
                             {items[key]}
                         </div>
                     )
@@ -112,3 +114,4 @@ export default class RibbonButton extends React.Component {
         return this.props.plugin.getEditor().getDocument();
     }
 }
+export default withStyles(styles)(RibbonButton);
