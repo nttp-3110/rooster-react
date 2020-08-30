@@ -10,5 +10,9 @@ export const Rooster = () => {
             onClick:() => alert('hello')
         }
     }
-    return <div style={{position: 'absolute', top: 0, bottom: 0}}><RoosterReact ribbonButtons={buttons} /></div>
+    const ref = React.useRef();
+    return <div style={{position: 'absolute', top: 0, bottom: 40}}>
+                <RoosterReact ribbonButtons={buttons} ref={ref} />
+                <button onClick={() => console.log(ref.current.getContent())}>Get Content</button>
+        </div>
 }

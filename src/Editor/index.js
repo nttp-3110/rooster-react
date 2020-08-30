@@ -5,9 +5,9 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
     Editor as RoosterJsEditor,
-    EditorOptions,
-    EditorPlugin,
-    UndoService,
+    // EditorOptions,
+    // EditorPlugin,
+    // UndoService,
 } from 'roosterjs-editor-core';
 
 import {
@@ -16,12 +16,12 @@ import {
     ContentEdit,
     Watermark,
     TableResize,
-    ContentEditFeatures,
+    // ContentEditFeatures,
     getDefaultContentEditFeatures,
     CustomReplace as CustomReplacePlugin,
     EntityPlugin,
     ImageResize,
-    PickerPlugin,
+    // PickerPlugin,
 } from 'roosterjs-editor-plugins';
 import styles from './styles';
 const assign = require('object-assign');

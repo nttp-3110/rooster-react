@@ -1,10 +1,7 @@
 const styles = theme => ({
     ribbon: {
         height: 38,
-        whiteSpace: 'nowrap',
-        '.katex .katex-mathml': {
-            display: 'none'
-        }
+        whiteSpace: 'nowrap'
     },
     button: {
         borderWidth: 0,

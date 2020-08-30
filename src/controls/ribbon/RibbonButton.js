@@ -1,11 +1,7 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-// import MainPaneBase from '../MainPaneBase';
-// import RibbonButtonType, { DropDownRenderer } from './RibbonButtonType';
-// import RibbonPlugin from './RibbonPlugin';
 import { Browser } from 'roosterjs-editor-dom';
-// import { FormatState } from 'roosterjs-editor-types';
 import styles from './RibbonStyles';
 
 

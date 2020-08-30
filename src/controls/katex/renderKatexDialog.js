@@ -41,11 +41,18 @@ class InsertFormula extends React.Component {
         editor.addUndoSnapshot(function () {
             const html = KaTex.renderToString(value);
             const formulaNode = editor.getDocument().createElement('span');
-            formulaNode.setAttribute('contenteditable', 'false');
+            formulaNode.classList.add('katex-wrapper');
             formulaNode.innerHTML = html;
-            const katexHtml = formulaNode.getElementsByClassName('katex-html')[0];
-            katexHtml.setAttribute('contenteditable', 'false');
-            editor.insertNode(formulaNode.firstChild);
+            // No need math element.
+            const katexMath = formulaNode.getElementsByClassName('katex-mathml')[0];
+            if (katexMath) {
+                katexMath.remove();
+            }
+            // formulaNode.firstChild.setAttribute('contenteditable', 'false');
+            // const katexHtml = formulaNode.getElementsByClassName('katex-html')[0];
+            // katexHtml.setAttribute('contenteditable', 'false');
+            formulaNode.setAttribute('contenteditable', 'false');
+            editor.insertNode(formulaNode);
         }, "Format" /* Format */);
     };
 }

@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import RibbonButton from './RibbonButton';
 import ribbonButtons from './ribbonButtons';
@@ -7,7 +8,6 @@ import { QueryScope } from 'roosterjs-editor-types';
 import styles from './RibbonStyles';
 
 // let styles = require('./Ribbon.css');
-
 
 class Ribbon extends React.Component {
     render() {
@@ -76,4 +76,8 @@ class Ribbon extends React.Component {
         this.forceUpdate();
     };
 }
+Ribbon.propTypes = {
+    plugin: PropTypes.array,
+    ribbonButtons: PropTypes.array
+};
 export default withStyles(styles)(Ribbon);

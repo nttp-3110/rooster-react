@@ -1,9 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
-// import BuildInPluginState from './BuildInPluginState';
 import Editor from './Editor';
-
-// import PopoutMainPane from './PopoutMainPane';
 import Ribbon from './controls/ribbon/Ribbon';
 import { getDefaultContentEditFeatures } from 'roosterjs-editor-plugins';
 
@@ -11,13 +9,12 @@ import { getAllPluginArray, getPlugins } from './controls/plugins';
 import styles from './styles';
 
 // const styles = require('./styles.css');
-const PopoutRoot = 'mainPane';
-const POPOUT_HTML = `<!doctype html><html><head><title>RoosterJs Demo Page PopOut</title></head><body><div id=${PopoutRoot}></div></body></html>`;
-const POPOUT_FEATURES = 'menubar=no,statusbar=no,width=1200,height=800';
-const POPOUT_URL = 'about:blank';
-const POPOUT_TARGET = '_blank';
+// const PopoutRoot = 'mainPane';
+// const POPOUT_HTML = `<!doctype html><html><head><title>RoosterJs Demo Page PopOut</title></head><body><div id=${PopoutRoot}></div></body></html>`;
+// const POPOUT_FEATURES = 'menubar=no,statusbar=no,width=1200,height=800';
+// const POPOUT_URL = 'about:blank';
+// const POPOUT_TARGET = '_blank';
 export const UrlPlaceholder = '$url$';
-
 const initialState = {
     pluginList: {
         hyperlink: true,
@@ -47,8 +44,8 @@ class RoosterReact extends React.PureComponent {
             isPopoutShown: false,
         };
         this.mouseX = null;
-        this.editor = React.createRef();
-        this.popoutMainPane = React.createRef();
+        this.editor = props.editorRef || React.createRef();
+        // this.popoutMainPane = React.createRef();
     }
 
     render() {
@@ -70,7 +67,7 @@ class RoosterReact extends React.PureComponent {
                         className={classes.editor}
                         ref={this.editor}
                         initState={initialState}
-                        undo={plugins.snapshot}
+                        // undo={plugins.snapshot}
                         content={this.content}
                     />
                 </div>
@@ -151,18 +148,22 @@ class RoosterReact extends React.PureComponent {
         document.body.style.userSelect = '';
     };
 
-    onShowSidePane = () => {
-        this.setState({
-            showSidePane: true,
-        });
-    };
+    // onShowSidePane = () => {
+    //     this.setState({
+    //         showSidePane: true,
+    //     });
+    // };
 
-    onHideSidePane = () => {
-        this.setState({
-            showSidePane: false,
-        });
-        window.location.hash = '';
-    };
+    // onHideSidePane = () => {
+    //     this.setState({
+    //         showSidePane: false,
+    //     });
+    //     window.location.hash = '';
+    // };
 }
-
-export default withStyles(styles)(RoosterReact);
+RoosterReact.propTypes = {
+    classes: PropTypes.object,
+    ribbonButtons: PropTypes.array,
+    editRef: PropTypes.any
+};
+export default withStyles(styles)(React.forwardRef((props, ref) =>  <RoosterReact {...props} editorRef={ref} />));
