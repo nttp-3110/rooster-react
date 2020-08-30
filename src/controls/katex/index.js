@@ -1,7 +1,13 @@
 // import {  PluginEventType } from 'roosterjs-editor-types';
 // const katexCss = require('katex/dist/katex.min.css').toString();
-const KATEX_HTML_TAG =['MATH','SEMANTICS','MROW','ANNOTATION','MSUP','MN'];
-const KATEX_ATTRIBUTES =['XMLNS', 'ENCODING', 'CONTENTEDITABLE', 'STYLE'];
+const KATEX_HTML_TAG = ['MATH','SEMANTICS','MROW','ANNOTATION','MSUP','MN', 'SVG', 'G', 'PATH', 'RECT'];
+const KATEX_ATTRIBUTES = ['XMLNS', 'ENCODING', 'CONTENTEDITABLE', 'STYLE', 'WIDTH', 'HEIGHT', 'D', 'viewBox', 'preserveAspectRatio'];
+const KATEX_CLASSES = ['katex-wrapper', 'katex', 'katex-html', 'base', 'mord', 'strut', 'msupsub', 
+                        'vlist', 'vlist-t', 'vlist-r', 'pstrut', 'sizing', 'reset-size6', 'size3', 'mtight',
+                        'svg-align', 'hide-tail', 'd', 'mop', 'op-symbol',  'mtable', 'col-align', 'arraycolsep',
+                        'col-align-c', 'vlist-t2', 'vlist-s', 'delimsizing', 'size4', 'mclose', 'nulldelimiter', 'minner',
+                        'mopen', 'frac-line'
+                    ]
 export default class KatexPlugin {
 
     getName() {
@@ -59,56 +65,11 @@ export default class KatexPlugin {
     };
 
     onPluginEvent(event) {
-        var _this = this;
         if (event.eventType === 9 /* BeforePaste */) {
-            const htmlAttributes = event.htmlAttributes;
-            const fragment = event.fragment;
             const sanitizingOption_1 = event.sanitizingOption;
-            const html = event.clipboardData.html;
-            console.log(event);
             sanitizingOption_1.additionalAllowedTags.push(...KATEX_HTML_TAG);
             sanitizingOption_1.additionalAllowAttributes.push(...KATEX_ATTRIBUTES);
-            sanitizingOption_1.additionalAllowedCssClasses.push(...['katex-wrapper', 'katex', 'katex-html', 'base', 'mord', 'strut', 'msupsub', 'vlist', 'vlist-t', 'vlist-r', 'pstrut', 'sizing', 'reset-size6', 'size3', 'mtight']);
-            // if (htmlAttributes[WORD_ATTRIBUTE_NAME] == WORD_ATTRIBUTE_VALUE) {
-            //     // Handle HTML copied from Word
-            //     convertPastedContentFromWord_1.default(event);
-            // }
-            // else if (htmlAttributes[EXCEL_ATTRIBUTE_NAME] == EXCEL_ATTRIBUTE_VALUE ||
-            //     htmlAttributes[EXCEL_ONLINE_ATTRIBUTE_NAME] == EXCEL_ONLINE_ATTRIBUTE_VALUE) {
-            //     // Handle HTML copied from Excel
-            //     convertPastedContentFromExcel_1.default(event);
-            // }
-            // else if ((wacListElements = fragment.querySelectorAll(constants_1.WAC_IDENTIFING_SELECTOR))[0]) {
-            //     // Once it is known that the document is from WAC
-            //     // We need to remove the display property and margin from all the list item
-            //     wacListElements.forEach(function (el) {
-            //         el.style.display = null;
-            //         el.style.margin = null;
-            //     });
-            //     // call conversion function if the pasted content is from word online and
-            //     // has list element in the pasted content.
-            //     if (convertPastedContentFromWordOnline_1.isWordOnlineWithList(fragment)) {
-            //         convertPastedContentFromWordOnline_1.default(fragment);
-            //     }
-            // }
-            // else if (fragment.querySelector(GOOGLE_SHEET_NODE_NAME)) {
-            //     sanitizingOption_1.additionalAllowedTags.push(GOOGLE_SHEET_NODE_NAME);
-            // }
-            // // TODO: Deprecate attributeCallbacks parameter
-            // if (this.attributeCallbacks) {
-            //     Object.keys(this.attributeCallbacks).forEach(function (name) {
-            //         roosterjs_editor_dom_1.chainSanitizerCallback(sanitizingOption_1.attributeCallbacks, name, _this.attributeCallbacks[name]);
-            //     });
-            // }
+            sanitizingOption_1.additionalAllowedCssClasses.push(...KATEX_CLASSES);
         }
-        // console.log(event, PluginEventType.KeyUp, PluginEventType.MouseUp);
-        // console.log(this.katex);
-        // if (
-        //     this.katex &&
-        //     event.eventType === PluginEventType.KeyUp
-        // ) {
-        //     // this.katex.forceUpdate();
-        //     console.log('Backspace');
-        // }
     }
 }

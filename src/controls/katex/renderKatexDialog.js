@@ -11,8 +11,12 @@ class InsertFormula extends React.Component {
                     <tr>
                         <td >Formula:</td>
                         <td>
-                            <input type={'text'} ref={ref => (this.formula = ref)} />
+                            <input type='text' ref={ref => (this.formula = ref)} />
                         </td>
+                    </tr>
+                    <tr>
+                        <td>is block?</td>
+                        <td><input type='checkbox' ref={ref=> (this.isBlock = ref)} /></td>
                     </tr>
                     <tr>
                         <td colSpan={2} >
@@ -31,23 +35,20 @@ class InsertFormula extends React.Component {
 
     componentDidMount() {
         this.formula.value = '';
+        this.isBlock.checked = false;
     }
 
 
      onOk = () => {
         const { editor} = this.props;
         const { value } = this.formula;
+        const { checked } = this.isBlock;
         this.props.onDismiss();
         editor.addUndoSnapshot(function () {
-            const html = KaTex.renderToString(value);
+            const html = KaTex.renderToString(value, {output: 'html', displayMode: checked});
             const formulaNode = editor.getDocument().createElement('span');
             formulaNode.classList.add('katex-wrapper');
             formulaNode.innerHTML = html;
-            // No need math element.
-            const katexMath = formulaNode.getElementsByClassName('katex-mathml')[0];
-            if (katexMath) {
-                katexMath.remove();
-            }
             // formulaNode.firstChild.setAttribute('contenteditable', 'false');
             // const katexHtml = formulaNode.getElementsByClassName('katex-html')[0];
             // katexHtml.setAttribute('contenteditable', 'false');
