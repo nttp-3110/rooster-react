@@ -24,7 +24,7 @@ export default class RibbonPlugin {
     };
 
     onPluginEvent(event) {
-        console.log(this.ribbon);
+        // console.log(this.ribbon);
         if (
             this.ribbon &&
             (event.eventType === PluginEventType.KeyUp ||

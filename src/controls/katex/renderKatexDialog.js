@@ -1,5 +1,6 @@
 import * as React from 'react';
 import KaTex from 'katex';
+import { insertEntity } from 'roosterjs-editor-plugins';
 // import { Editor } from 'roosterjs-editor-core';
 
 
@@ -15,7 +16,7 @@ class InsertFormula extends React.Component {
                         </td>
                     </tr>
                     <tr>
-                        <td>is block?</td>
+                        <td>Display block:</td>
                         <td><input type='checkbox' ref={ref=> (this.isBlock = ref)} /></td>
                     </tr>
                     <tr>
@@ -48,12 +49,23 @@ class InsertFormula extends React.Component {
             const html = KaTex.renderToString(value, {output: 'html', displayMode: checked});
             const formulaNode = editor.getDocument().createElement('span');
             formulaNode.classList.add('katex-wrapper');
-            formulaNode.innerHTML = html;
+            if (checked) {
+                formulaNode.classList.add('block');
+            }
+            formulaNode.innerHTML = '<span class="placeholder">&nbsp;</span>' + html + '<span class="placeholder-right">&nbsp;</span>';
+            // formulaNode.innerHTML = '<span class="katex" contenteditable="false"><span class="katex-html" aria-hidden="true"  contenteditable="false"><span class="base">'+value+'</span></span><span>';
             // formulaNode.firstChild.setAttribute('contenteditable', 'false');
-            // const katexHtml = formulaNode.getElementsByClassName('katex-html')[0];
+            // const katexHtml = formulaNode.getElementsByClassName('katex')[0];
             // katexHtml.setAttribute('contenteditable', 'false');
+            // katexHtml.setAttribute('aria-hidden', 'false');
             formulaNode.setAttribute('contenteditable', 'false');
             editor.insertNode(formulaNode);
+            // const hasFocus = editor.hasFocus();
+            // if (!hasFocus) {
+            //     editor.focus();
+            // }
+            // insertEntity(editor, 'katex', formulaNode.firstChild, false, true);
+            // editor.insertContent(' ');
         }, "Format" /* Format */);
     };
 }

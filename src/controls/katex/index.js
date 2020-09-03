@@ -1,4 +1,5 @@
 // import {  PluginEventType } from 'roosterjs-editor-types';
+import { Position } from 'roosterjs-editor-dom';
 // const katexCss = require('katex/dist/katex.min.css').toString();
 const KATEX_HTML_TAG = ['MATH','SEMANTICS','MROW','ANNOTATION','MSUP','MN', 'SVG', 'G', 'PATH', 'RECT'];
 const KATEX_ATTRIBUTES = ['XMLNS', 'ENCODING', 'CONTENTEDITABLE', 'STYLE', 'WIDTH', 'HEIGHT', 'D', 'viewBox', 'preserveAspectRatio'];
@@ -6,7 +7,8 @@ const KATEX_CLASSES = ['katex-wrapper', 'katex', 'katex-html', 'base', 'mord', '
                         'vlist', 'vlist-t', 'vlist-r', 'pstrut', 'sizing', 'reset-size6', 'size3', 'mtight',
                         'svg-align', 'hide-tail', 'd', 'mop', 'op-symbol',  'mtable', 'col-align', 'arraycolsep',
                         'col-align-c', 'vlist-t2', 'vlist-s', 'delimsizing', 'size4', 'mclose', 'nulldelimiter', 'minner',
-                        'mopen', 'frac-line'
+                        'mopen', 'frac-line', 'mrel', 'x-arrow', 'stretchy', 'halfarrow-right', 'halfarrow-left', 'frac-line',
+                        'mbin', 'mspace', 'nulldelimiter', 'mfrac', 'mathnormal'
                     ]
 export default class KatexPlugin {
 
@@ -18,8 +20,15 @@ export default class KatexPlugin {
         this.editor = editor;
         this.eventDisposer = editor.addDomEventHandler({
             copy: this.onExtract(false),
+            blur: this.onBlur,
             cut: this.onExtract(true),
         });
+    }
+    onBlur=  (event) => {
+        if (this.katexWrapper) {
+            this.katexWrapper.classList.remove('selected');
+            this.katexWrapper = null;
+        }
     }
 
     onExtract(isCut) { 
@@ -64,12 +73,78 @@ export default class KatexPlugin {
         this.katex = ref;
     };
 
+    isArrowKey = (event) => {
+        if (event && (event.keyCode === 37 || event.keyCode === 38 || event.keyCode === 39 || event.keyCode === 40)) {
+            return true;
+        }
+        return false;
+    }
+
     onPluginEvent(event) {
+        console.log(event);
+        var selection = this.editor.getSelectionRange();
+
+        // if (selection && !selection.collapsed) {
+        //     var copyFragment = selection.cloneContents();
+        //     var haveKatex = copyFragment.querySelectorAll('span.katex-wrapper');
+        //     var copyRange = selection.cloneRange();
+        //     // console.log(copyRange);
+        //     // var range = setHtmlWithSelectionPath(contentDiv, copyFragment);
+        //     if (haveKatex.length) {
+        //         haveKatex.forEach(node => {
+        //             node.classList.add('selected');
+        //         });
+        //         this.editor.insertNode(copyFragment);
+        //         this.editor.select(copyRange);
+        //     }
+        // }
+        console.log(this.editor.getSelectionPath());
+        // // console.log(this.editor.getSelectionTraverser());
+        console.log(this.editor.getCursorRect());
+        const element = this.editor.getElementAtCursor();
+        console.log(element);
+        if (element && element.querySelectorAll('.katex-wrapper')) {
+            if (event && event.rawEvent && event.rawEvent.keyCode === 36) {
+                this.editor.select(element.parent || element, 0);
+            } else if (event && event.rawEvent && event.rawEvent.keyCode === 35) {
+                this.editor.select(element.parent || element, -1);
+            }
+        }
+        if (this.isArrowKey(event.rawEvent)) {
+            const element = this.editor.getElementAtCursor();
+            if (element && element.closest('.katex-wrapper')) {
+                const parent = element.closest('.katex-wrapper');
+                // const position = new Position(parent, -3);
+                // console.log(position);
+                if (event.rawEvent.keyCode === 39 ) {
+                    if (element.classList.contains('placeholder')) {
+                        this.editor.select(parent, -2);
+                    } else {
+                        this.editor.select(parent, -1);
+                    }
+                } else if (event.rawEvent.keyCode === 37) {
+                    this.editor.select(parent, 0);
+                }
+            }
+        }
+        
+
         if (event.eventType === 9 /* BeforePaste */) {
             const sanitizingOption_1 = event.sanitizingOption;
             sanitizingOption_1.additionalAllowedTags.push(...KATEX_HTML_TAG);
             sanitizingOption_1.additionalAllowAttributes.push(...KATEX_ATTRIBUTES);
             sanitizingOption_1.additionalAllowedCssClasses.push(...KATEX_CLASSES);
+        } else if (event.eventType === 4 /* Mousedown */) {
+            const rawEvent = event.rawEvent;
+            const target = rawEvent.target;
+            this.katexWrapper = target.closest('.katex-wrapper');
+            if (this.katexWrapper) {
+                // this.katexWrapper.classList.add('selected');
+                // const range = createRange(this.katexWrapper, this.katexWrapper);
+                // range.selectNode(this.katexWrapper);
+                // console.log(range);
+                // selection.addRange(range);
+            }
         }
     }
 }
