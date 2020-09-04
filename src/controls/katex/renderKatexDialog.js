@@ -1,6 +1,6 @@
 import * as React from 'react';
 import KaTex from 'katex';
-import { insertEntity } from 'roosterjs-editor-plugins';
+// import { insertEntity } from 'roosterjs-editor-plugins';
 // import { Editor } from 'roosterjs-editor-core';
 
 

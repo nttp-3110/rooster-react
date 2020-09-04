@@ -82,7 +82,7 @@ export default class KatexPlugin {
 
     onPluginEvent(event) {
         console.log(event);
-        var selection = this.editor.getSelectionRange();
+        // var selection = this.editor.getSelectionRange();
 
         // if (selection && !selection.collapsed) {
         //     var copyFragment = selection.cloneContents();
@@ -98,11 +98,11 @@ export default class KatexPlugin {
         //         this.editor.select(copyRange);
         //     }
         // }
-        console.log(this.editor.getSelectionPath());
+        // console.log(this.editor.getSelectionPath());
         // // console.log(this.editor.getSelectionTraverser());
-        console.log(this.editor.getCursorRect());
+        // console.log(this.editor.getCursorRect());
         const element = this.editor.getElementAtCursor();
-        console.log(element);
+        // console.log(element);
         if (element && element.querySelectorAll('.katex-wrapper')) {
             if (event && event.rawEvent && event.rawEvent.keyCode === 36) {
                 this.editor.select(element.parent || element, 0);

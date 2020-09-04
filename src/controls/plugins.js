@@ -4,6 +4,7 @@
 // import FormatStatePlugin from './sidePane/formatState/FormatStatePlugin';
 import RibbonPlugin from './ribbon/RibbonPlugin';
 import KatexPlugin from './katex';
+import MathJaxPlugin from './mathjax';
 // import SidePanePlugin from './SidePanePlugin';
 // import SnapshotPlugin from './sidePane/snapshot/SnapshotPlugin';
 // import { EditorPlugin } from 'roosterjs-editor-core';
@@ -24,6 +25,7 @@ export function getPlugins() {
         plugins = {
             ribbon: new RibbonPlugin(),
             katex: new KatexPlugin(),
+            mathjax: new MathJaxPlugin(),
             // formatState: new FormatStatePlugin(),
             // snapshot: new SnapshotPlugin(),
             // editorOptions: new EditorOptionsPlugin(),
@@ -39,6 +41,7 @@ export function getAllPluginArray(includeSidePanePlugins) {
     return [
         allPlugins.ribbon,
         allPlugins.katex,
+        allPlugins.mathjax,
         // includeSidePanePlugins && allPlugins.formatState,
         // includeSidePanePlugins && allPlugins.editorOptions,
         // includeSidePanePlugins && allPlugins.eventView,

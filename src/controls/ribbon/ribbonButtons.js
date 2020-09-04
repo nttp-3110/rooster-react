@@ -2,6 +2,7 @@ import renderInsertLinkDialog from './renderInsertLinkDialog';
 import renderTableOptions from './renderTableOptions';
 import { Alignment, Direction, Indentation } from 'roosterjs-editor-types';
 import renderKatexDialog from '../katex/renderKatexDialog';
+import renderMathDialog from '../mathjax/renderMathDialog';
 import {
     setBackgroundColor,
     setFontName,
@@ -243,6 +244,14 @@ const buttons = {
         onClick: null,
         dropDownItems: { '0': 'dummy' },
         dropDownRenderer: renderKatexDialog,
+        preserveOnClickAway: true,
+    },
+    formular2: {
+        title: 'Formula',
+        image: require('./svg/formula.svg'),
+        onClick: null,
+        dropDownItems: { '0': 'dummy' },
+        dropDownRenderer: renderMathDialog,
         preserveOnClickAway: true,
     },
     undo: {
