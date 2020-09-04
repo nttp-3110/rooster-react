@@ -50,7 +50,7 @@ class RoosterReact extends React.PureComponent {
 
     render() {
         let plugins = getPlugins();
-        const { classes, ribbonButtons } = this.props;
+        const { classes, ribbonButtons, ...rest } = this.props;
         return (
             <div className={classes.root}>
                 {this.state.showRibbon && (
@@ -69,6 +69,7 @@ class RoosterReact extends React.PureComponent {
                         initState={initialState}
                         // undo={plugins.snapshot}
                         content={this.content}
+                        {...rest}
                     />
                 </div>
             </div>

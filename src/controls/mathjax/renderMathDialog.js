@@ -1,51 +1,50 @@
 import * as React from 'react';
-import {EVENT_TYPE} from '.';
+import IconButton from '@material-ui/core/IconButton';
+import DoneIcon from '@material-ui/icons/Done';
+import ClearIcon from '@material-ui/icons/Clear';
+import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
+import { EVENT_TYPE } from '.';
 // import { insertEntity } from 'roosterjs-editor-plugins';
 // import { Editor } from 'roosterjs-editor-core';
 
 
 class InsertFormula extends React.Component {
+    state = {
+      formula: '',
+    }
+
+    onChange = (e) => {
+
+        this.setState({[e.target.name]: e.target.value});
+      
+    }
+
     render() {
+      const { formula } = this.state;
         return (
-            <table>
-                <tbody>
-                    <tr>
-                        <td >Formula:</td>
-                        <td>
-                            <input type='text' ref={ref => (this.formula = ref)} />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Display block:</td>
-                        <td><input type='checkbox' ref={ref=> (this.isBlock = ref)} /></td>
-                    </tr>
-                    <tr>
-                        <td colSpan={2} >
-                            <button onClick={this.onOk}>
-                                OK
-                            </button>
-                            <button onClick={this.props.onDismiss}>
-                                Cancel
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <Grid container spacing={2}>
+                <Grid item xs={12}>
+                    <TextField placeholder="Formula" name="formula" label="Formula" type='text' value={formula} onChange={this.onChange} />
+                </Grid>
+                <Grid container
+                  direction="row"
+                  justify="space-between"
+                  alignItems="center">
+                    <IconButton variant="contained" onClick={this.onOk} color="primary"><DoneIcon/></IconButton>
+                    <IconButton variant="contained" onClick={this.props.onDismiss}><ClearIcon /></IconButton>
+                </Grid>
+            </Grid>
         );
     }
 
-    componentDidMount() {
-        this.formula.value = '';
-        this.isBlock.checked = false;
-    }
 
 
      onOk = () => {
         const { editor} = this.props;
-        const { value } = this.formula;
-        const { checked } = this.isBlock;
+        const { formula } = this.state;
         this.props.onDismiss();
-        editor.triggerPluginEvent(EVENT_TYPE, {value, isBlock: checked});
+        editor.triggerPluginEvent(EVENT_TYPE, {formula});
     };
 }
 

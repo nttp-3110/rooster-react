@@ -3,7 +3,7 @@
 // import EventViewPlugin from './sidePane/eventViewer/EventViewPlugin';
 // import FormatStatePlugin from './sidePane/formatState/FormatStatePlugin';
 import RibbonPlugin from './ribbon/RibbonPlugin';
-import KatexPlugin from './katex';
+// import KatexPlugin from './katex';
 import MathJaxPlugin from './mathjax';
 // import SidePanePlugin from './SidePanePlugin';
 // import SnapshotPlugin from './sidePane/snapshot/SnapshotPlugin';
@@ -24,7 +24,7 @@ export function getPlugins() {
     if (!plugins) {
         plugins = {
             ribbon: new RibbonPlugin(),
-            katex: new KatexPlugin(),
+            // katex: new KatexPlugin(),
             mathjax: new MathJaxPlugin(),
             // formatState: new FormatStatePlugin(),
             // snapshot: new SnapshotPlugin(),
@@ -40,7 +40,7 @@ export function getAllPluginArray(includeSidePanePlugins) {
     let allPlugins = getPlugins();
     return [
         allPlugins.ribbon,
-        allPlugins.katex,
+        // allPlugins.katex,
         allPlugins.mathjax,
         // includeSidePanePlugins && allPlugins.formatState,
         // includeSidePanePlugins && allPlugins.editorOptions,

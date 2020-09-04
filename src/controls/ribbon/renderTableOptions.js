@@ -1,21 +1,29 @@
-import * as React from 'react';
+import React from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import DoneIcon from '@material-ui/icons/Done';
+import ClearIcon from '@material-ui/icons/Clear';
+import Typography from '@material-ui/core/Typography';
+import TextField from '@material-ui/core/TextField';
+// import Button from '@material-ui/core/Button'
 // import { Editor } from 'roosterjs-editor-core';
 import { editTable, formatTable, insertTable } from 'roosterjs-editor-api';
-import { TableOperation } from 'roosterjs-editor-types';
-
-const styles = require('./TableOptions.css');
-
-const TABLE_FORMAT = {
-    default: createTableFormat('#FFF', '#FFF', '#ABABAB', '#ABABAB', '#ABABAB'),
-    lightLines: createTableFormat('#FFF', '#FFF', null, '#92C0E0'),
-    towTones: createTableFormat('#C0E4FF', '#FFF'),
-    lightBands: createTableFormat('#D8D8D8', '#FFF'),
-    grid: createTableFormat('#D8D8D8', '#FFF', '#ABABAB', '#ABABAB', '#ABABAB'),
-    clear: createTableFormat('#FFF', '#FFF'),
-};
+// import { TableOperation } from 'roosterjs-editor-types';
+import Grid from '@material-ui/core/Grid';
 
 
-class TableOptions extends React.Component {
+
+
+// const TABLE_FORMAT = {
+//     default: createTableFormat('#FFF', '#FFF', '#ABABAB', '#ABABAB', '#ABABAB'),
+//     lightLines: createTableFormat('#FFF', '#FFF', null, '#92C0E0'),
+//     towTones: createTableFormat('#C0E4FF', '#FFF'),
+//     lightBands: createTableFormat('#D8D8D8', '#FFF'),
+//     grid: createTableFormat('#D8D8D8', '#FFF', '#ABABAB', '#ABABAB', '#ABABAB'),
+//     clear: createTableFormat('#FFF', '#FFF'),
+// };
+
+
+class TableOptions extends React.PureComponent {
     constructor(props) {
         super(props);
     
@@ -26,39 +34,35 @@ class TableOptions extends React.Component {
         this.topBorderColor = React.createRef();
         this.bottomBorderColor = React.createRef();
         this.verticalBorderColor = React.createRef();
+        this.state = {
+            cols: null,
+            rows: null
+        }
+    }
+
+    onChange = (e) => {
+        this.setState({[e.target.name]: e.target.value});
     }
 
     render() {
+        const { cols, rows } = this.state;
         return (
-            <div>
-                <div className={styles.close}>
-                    <button onClick={this.props.onDismiss}>X</button>
-                </div>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th colSpan={2}>Insert Table</th>
-                        </tr>
-                        <tr>
-                            <td>Columns:</td>
-                            <td>
-                                <input type="text" ref={this.cols} />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Rows:</td>
-                            <td>
-                                <input type="text" ref={this.rows} />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colSpan={2} className={styles.buttonRow}>
-                                <button onClick={this.onInsertTable} className={styles.button}>
+            <Grid container spacing={2}>
+                <Grid item><Typography variant='h6' align='center'>Insert Table</Typography></Grid>
+                <Grid item>
+                    <TextField value={cols} name="cols" onChange={this.onChange} label={'Columns'}/>
+                </Grid>
+                <Grid item>
+                    <TextField value={rows} name="rows" onChange={this.onChange} label={'Rows'}/>
+                </Grid>
+                        {/* <tr>
+                            <td colSpan={2} >
+                                <button onClick={this.onInsertTable} >
                                     Insert
                                 </button>
                             </td>
-                        </tr>
-                        <tr>
+                        </tr> */}
+                        {/* <tr>
                             <th colSpan={2}>Edit Table</th>
                         </tr>
                         <tr>
@@ -99,8 +103,8 @@ class TableOptions extends React.Component {
                                     TableOperation.SplitVertically
                                 )}
                             </td>
-                        </tr>
-                        <tr>
+                        </tr> */}
+                        {/* <tr>
                             <th colSpan={2}>Format Table</th>
                         </tr>
                         <tr>
@@ -121,7 +125,7 @@ class TableOptions extends React.Component {
                             </td>
                         </tr>
                         <tr>
-                            <th colSpan={2} className={styles.buttonRow}>
+                            <th colSpan={2} >
                                 Customized Colors:
                             </th>
                         </tr>
@@ -133,21 +137,21 @@ class TableOptions extends React.Component {
                         <tr>
                             <td
                                 colSpan={2}
-                                className={styles.buttonRow}
                                 onClick={this.onCustomizeFormat}>
-                                <button className={styles.button}>Apply Format</button>
+                                <button >Apply Format</button>
                             </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                        </tr> */}
+                    <Grid container justify="space-between" alignItems="center">
+                        <IconButton onClick={this.onInsertTable} color="primary"><DoneIcon /></IconButton>
+                        <IconButton onClick={this.props.onDismiss}><ClearIcon /></IconButton>
+                    </Grid>
+            </Grid>
         );
     }
 
     renderEditTableButton(text, operation) {
         return (
             <button
-                className={styles.button}
                 onClick={() => {
                     this.props.onDismiss();
                     editTable(this.props.editor, operation);
@@ -160,7 +164,6 @@ class TableOptions extends React.Component {
     renderFormatTableButton(text, format) {
         return (
             <button
-                className={styles.button}
                 onClick={() => {
                     this.props.onDismiss();
                     formatTable(this.props.editor, format);
@@ -176,7 +179,7 @@ class TableOptions extends React.Component {
     ) {
         return (
             <tr>
-                <td className={styles.label}>{text}</td>
+                <td >{text}</td>
                 <td>
                     <input type="text" ref={ref} />
                 </td>
@@ -186,9 +189,7 @@ class TableOptions extends React.Component {
 
     onInsertTable = () => {
         this.props.onDismiss();
-
-        let cols = parseInt(this.cols.current.value);
-        let rows = parseInt(this.rows.current.value);
+        const { rows, cols } = this.state;
         if (cols > 0 && cols <= 10 && rows > 0 && rows <= 10) {
             insertTable(this.props.editor, cols, rows);
         }

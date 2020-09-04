@@ -36,10 +36,11 @@ const styles = theme => ({
     },
     dropDown: {
         zIndex: 1,
+        minWidth: 180,
         border: 'solid 1px #00bbcc',
         display: 'inline-block',
         backgroundColor: 'white',
-        padding: 4,
+        padding: theme.spacing(1),
         boxShadow: '2px 2px 4px gray',
         position: 'absolute',
         top: 14,
@@ -53,6 +54,9 @@ const styles = theme => ({
         '&:hover': {
             backgroundColor: '#aaf6ff',
         }
+    },
+    checked: {
+        backgroundColor: theme.palette.primary.light
     }
 
 })

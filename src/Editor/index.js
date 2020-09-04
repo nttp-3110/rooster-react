@@ -71,8 +71,6 @@ class Editor extends React.Component {
         );
     }
 
-
-
     resetEditorPlugin(pluginState) {
         this.setState(pluginState);
     }

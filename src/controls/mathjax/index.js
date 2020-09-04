@@ -38,12 +38,12 @@ export default class MathJaxPlugin {
     };
 
     onPluginEvent(event) {
-        if (event.eventType === EVENT_TYPE) {
+        if (event.eventType === EVENT_TYPE && event.formula) {
             const tex = new TeX({packages: AllPackages.sort().join(', ').split(/\s*,\s*/)});
             const svg = new SVG({fontCache: 'local' });
             const html = mathjax.document('', {InputJax: tex, OutputJax: svg});
-            const node = html.convert(event.value, {
-                display: event.isBlock,
+            const node = html.convert(event.formula, {
+                display: false,
                 em: 16,
                 ex: 8,
                 containerWidth: 80*16

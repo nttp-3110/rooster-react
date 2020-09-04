@@ -1,41 +1,37 @@
-import * as React from 'react';
+import React from 'react';
+import Grid from '@material-ui/core/Grid';
 import { createLink } from 'roosterjs-editor-api';
-// import { Editor } from 'roosterjs-editor-core';
-
-const styles = require('./InsertLink.css');
 
 
-
-class InsertLink extends React.Component {
-
+class InsertLink extends React.PureComponent {
     render() {
         return (
-            <table>
+            <Grid>
                 <tbody>
                     <tr>
-                        <td className={styles.title}>Url:</td>
+                        <td >Url:</td>
                         <td>
                             <input type={'text'} ref={ref => (this.txtUrl = ref)} />
                         </td>
                     </tr>
                     <tr>
-                        <td className={styles.title}>Display text:</td>
+                        <td >Display text:</td>
                         <td>
                             <input type={'text'} ref={ref => (this.txtDisplayText = ref)} />
                         </td>
                     </tr>
                     <tr>
-                        <td colSpan={2} className={styles.buttonRow}>
-                            <button className={styles.button} onClick={this.onOk}>
+                        <td colSpan={2} >
+                            <button onClick={this.onOk}>
                                 OK
                             </button>
-                            <button className={styles.button} onClick={this.props.onDismiss}>
+                            <button onClick={this.props.onDismiss}>
                                 Cancel
                             </button>
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </Grid>
         );
     }
 
