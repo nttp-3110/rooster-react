@@ -1,7 +1,6 @@
 {
-  "name": "roosterjs-react",
-  "version": "0.1.0",
-  "private": true,
+  "name": "roosterjs-react-wrapper",
+  "version": "1.0.0",
   "dependencies": {
     "@babel/core": "7.9.0",
     "@material-ui/core": "^4.11.0",
@@ -155,5 +154,21 @@
     "@storybook/react": "^6.0.20",
     "@storybook/storybook-deployer": "^2.8.6",
     "react-is": "^16.13.1"
-  }
+  },
+  "description": "The [RoosterJS](https://github.com/Microsoft/roosterjs) react version.",
+  "main": ".pnp.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vanhonit/rooster-react.git"
+  },
+  "keywords": [
+    "RoosterJS",
+    "React"
+  ],
+  "author": "Hon Nguyen",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vanhonit/rooster-react/issues"
+  },
+  "homepage": "https://vanhonit.github.io/rooster-react/"
 }
