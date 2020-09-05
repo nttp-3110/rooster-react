@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Editor from './Editor';
-import Ribbon from './controls/ribbon/Ribbon';
+import Ribbon from './plugins/ribbon/Ribbon';
 import { getDefaultContentEditFeatures } from 'roosterjs-editor-plugins';
 
-import { getAllPluginArray, getPlugins } from './controls/plugins';
+import { getAllPluginArray, getPlugins } from './plugins/plugins';
 import styles from './styles';
 
 // const styles = require('./styles.css');

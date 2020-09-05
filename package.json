@@ -156,7 +156,6 @@
     "react-is": "^16.13.1"
   },
   "description": "The [RoosterJS](https://github.com/Microsoft/roosterjs) react version.",
-  "main": ".pnp.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vanhonit/rooster-react.git"
