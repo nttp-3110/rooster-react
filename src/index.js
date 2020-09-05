@@ -43,24 +43,45 @@ class RoosterReact extends React.PureComponent {
             showRibbon: true,
             isPopoutShown: false,
         };
+        this.timeoutId = null;
         this.mouseX = null;
+        this.isFocus = false;
         this.editor = props.editorRef || React.createRef();
         // this.popoutMainPane = React.createRef();
+    }
+
+    onBlur = () => {
+        this.timeoutId = setTimeout(() => {
+            console.log('Blur');
+            this.isFocus = false;
+            if (this.props.onBlur) {
+                this.props.onBlur();
+            }
+        });
+    }
+
+    onFocus = () => {
+        clearTimeout(this.timeoutId);
+        if (!this.isFocus) {
+            this.isFocus = true;
+            console.log('Focus');
+            if (this.props.onFocus) {
+                this.props.onFocus();
+            }
+        }
     }
 
     render() {
         let plugins = getPlugins();
         const { classes, ribbonButtons, ...rest } = this.props;
         return (
-            <div className={classes.root}>
-                {this.state.showRibbon && (
-                    <Ribbon
-                        plugin={plugins.ribbon}
-                        className={classes.noGrow}
-                        ribbonButtons={ribbonButtons}
-                        ref={plugins.ribbon.refCallback}
-                    />
-                )}
+            <div className={classes.root} onBlur={this.onBlur} onFocus={this.onFocus}>
+                <Ribbon
+                    plugin={plugins.ribbon}
+                    className={classes.noGrow}
+                    ribbonButtons={ribbonButtons}
+                    ref={plugins.ribbon.refCallback}
+                />
                 <div className={classes.body}>
                     <Editor
                         plugins={getAllPluginArray(this.state.showSidePane)}
@@ -84,11 +105,11 @@ class RoosterReact extends React.PureComponent {
         getPlugins().formatState.updateFormatState();
     }
 
-    setIsRibbonShown(isShown) {
-        this.setState({
-            showRibbon: isShown,
-        });
-    }
+    // setIsRibbonShown(isShown) {
+    //     this.setState({
+    //         showRibbon: isShown,
+    //     });
+    // }
 
     // popout() {
     //     const win = window.open(POPOUT_URL, POPOUT_TARGET, POPOUT_FEATURES);
@@ -131,23 +152,23 @@ class RoosterReact extends React.PureComponent {
     //     }, 0);
     // }
 
-    onMouseDown = (e) => {
-        document.addEventListener('mousemove', this.onMouseMove, true);
-        document.addEventListener('mouseup', this.onMouseUp, true);
-        document.body.style.userSelect = 'none';
-        this.mouseX = e.pageX;
-    };
+    // onMouseDown = (e) => {
+    //     document.addEventListener('mousemove', this.onMouseMove, true);
+    //     document.addEventListener('mouseup', this.onMouseUp, true);
+    //     document.body.style.userSelect = 'none';
+    //     this.mouseX = e.pageX;
+    // };
 
-    onMouseMove = (e) => {
-        this.sidePane.changeWidth(this.mouseX - e.pageX);
-        this.mouseX = e.pageX;
-    };
+    // onMouseMove = (e) => {
+    //     this.sidePane.changeWidth(this.mouseX - e.pageX);
+    //     this.mouseX = e.pageX;
+    // };
 
-    onMouseUp = (e) => {
-        document.removeEventListener('mousemove', this.onMouseMove, true);
-        document.removeEventListener('mouseup', this.onMouseUp, true);
-        document.body.style.userSelect = '';
-    };
+    // onMouseUp = (e) => {
+    //     document.removeEventListener('mousemove', this.onMouseMove, true);
+    //     document.removeEventListener('mouseup', this.onMouseUp, true);
+    //     document.body.style.userSelect = '';
+    // };
 
     // onShowSidePane = () => {
     //     this.setState({

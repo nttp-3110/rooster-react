@@ -6,7 +6,7 @@ export const Rooster = () => {
     const buttons = {
         insertImage: {
             title: 'Insert inline image',
-            image: require('../../src/controls/ribbon/svg/inlineimage.svg'),
+            image: require('../../src/plugins/ribbon/svg/inlineimage.svg'),
             onClick:() => alert('hello')
         }
     }

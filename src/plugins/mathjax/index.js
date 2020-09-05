@@ -38,6 +38,7 @@ export default class MathJaxPlugin {
     };
 
     onPluginEvent(event) {
+        console.log(event);
         if (event.eventType === EVENT_TYPE && event.formula) {
             const tex = new TeX({packages: AllPackages.sort().join(', ').split(/\s*,\s*/)});
             const svg = new SVG({fontCache: 'local' });
