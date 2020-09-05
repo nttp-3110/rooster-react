@@ -1,1 +1,1 @@
-The [RoosterJS](https://github.com/Microsoft/roosterjs) react version.
+The [RoosterJS](https://github.com/Microsoft/roosterjs) react version with [Material UI](https://material-ui.com/) design.

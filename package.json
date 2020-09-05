@@ -1,6 +1,6 @@
 {
   "name": "roosterjs-react-wrapper",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "dependencies": {
     "@babel/core": "7.9.0",
     "@material-ui/core": "^4.11.0",
