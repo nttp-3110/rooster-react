@@ -5,9 +5,6 @@ import ClearIcon from '@material-ui/icons/Clear';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import { EVENT_TYPE } from '.';
-// import { insertEntity } from 'roosterjs-editor-plugins';
-// import { Editor } from 'roosterjs-editor-core';
-
 
 class InsertFormula extends React.Component {
     state = {

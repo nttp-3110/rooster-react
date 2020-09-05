@@ -1,7 +1,7 @@
 import renderInsertLinkDialog from './renderInsertLinkDialog';
 import renderTableOptions from './renderTableOptions';
 import { Alignment, Direction, Indentation } from 'roosterjs-editor-types';
-import renderKatexDialog from '../katex/renderKatexDialog';
+// import renderKatexDialog from '../katex/renderKatexDialog';
 import renderMathDialog from '../mathjax/renderMathDialog';
 import {
     setBackgroundColor,
@@ -139,6 +139,7 @@ const buttons = {
         title: 'Align left',
         image: require('./svg/alignleft.svg'),
         onClick: editor => setAlignment(editor, Alignment.Left),
+        checked: format => console.log(format)
     },
     alignCenter: {
         title: 'Align center',
