@@ -27,7 +27,7 @@ import styles from './styles';
 const assign = require('object-assign');
 export const UrlPlaceholder = '$url$';
 
-let editorInstance = null;
+// let editorInstance = null;
 let editorInstanceToggleablePlugins = null;
 
 class Editor extends React.Component {
@@ -37,6 +37,7 @@ class Editor extends React.Component {
     constructor(props) {
         super(props);
         this.state = props.initState;
+        this.editor = null;
     }
 
 
@@ -50,15 +51,15 @@ class Editor extends React.Component {
 
     componentDidMount() {
         this.initEditor();
-        if (editorInstance === null) {
-            editorInstance = this.editor;
-        }
+        // if (editorInstance === null) {
+        //     editorInstance = this.editor;
+        // }
     }
 
     componentWillUnmount() {
-        if (editorInstance === this.editor) {
-            editorInstance = null;
-        }
+        // if (editorInstance === this.editor) {
+        //     editorInstance = null;
+        // }
         this.disposeEditor();
     }
 

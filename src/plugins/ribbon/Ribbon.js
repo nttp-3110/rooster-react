@@ -12,6 +12,9 @@ import styles from './RibbonStyles';
 class Ribbon extends React.Component {
     render() {
         const plugin = this.props.plugin;
+        if (!plugin) {
+            return null;
+        }
         const editor = plugin.getEditor();
         const format = editor && getFormatState(editor);
         const button = {...ribbonButtons, ...this.props.ribbonButtons};

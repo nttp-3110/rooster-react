@@ -5,7 +5,7 @@ import Editor from './Editor';
 import Ribbon from './plugins/ribbon/Ribbon';
 import { getDefaultContentEditFeatures } from 'roosterjs-editor-plugins';
 
-import { getAllPluginArray, getPlugins } from './plugins/plugins';
+import PluginManage from './plugins/plugins';
 import styles from './styles';
 
 // const styles = require('./styles.css');
@@ -34,7 +34,7 @@ const initialState = {
     showRibbon: true,
     useExperimentFeatures: true,
 };
-class RoosterReact extends React.PureComponent {
+class RoosterReact extends React.Component {
     constructor(props) {
         super(props);
 
@@ -47,12 +47,21 @@ class RoosterReact extends React.PureComponent {
         this.mouseX = null;
         this.isFocus = false;
         this.editor = props.editorRef || React.createRef();
+        this.pluginManage = null;
+        // this.pluginArray = getAllPluginArray();
         // this.popoutMainPane = React.createRef();
+    }
+
+    initPlugins() {
+        if (this.pluginManage) {
+            this.pluginManage.dispose();
+            this.pluginManage = null;
+        }
+        this.pluginManage = new PluginManage();
     }
 
     onBlur = () => {
         this.timeoutId = setTimeout(() => {
-            console.log('Blur');
             this.isFocus = false;
             if (this.props.onBlur) {
                 this.props.onBlur();
@@ -64,7 +73,7 @@ class RoosterReact extends React.PureComponent {
         clearTimeout(this.timeoutId);
         if (!this.isFocus) {
             this.isFocus = true;
-            console.log('Focus');
+            // console.log('Focus');
             if (this.props.onFocus) {
                 this.props.onFocus();
             }
@@ -72,7 +81,9 @@ class RoosterReact extends React.PureComponent {
     }
 
     render() {
-        let plugins = getPlugins();
+        this.initPlugins();
+        let plugins = this.pluginManage?.getPlugins() ?? {};
+        let pluginArray = this.pluginManage?.getAllPluginArray() ?? [];
         const { classes, ribbonButtons, ...rest } = this.props;
         return (
             <div className={classes.root} onBlur={this.onBlur} onFocus={this.onFocus}>
@@ -80,11 +91,11 @@ class RoosterReact extends React.PureComponent {
                     plugin={plugins.ribbon}
                     className={classes.noGrow}
                     ribbonButtons={ribbonButtons}
-                    ref={plugins.ribbon.refCallback}
+                    ref={plugins?.ribbon?.refCallback}
                 />
                 <div className={classes.body}>
                     <Editor
-                        plugins={getAllPluginArray(this.state.showSidePane)}
+                        plugins={pluginArray}
                         className={classes.editor}
                         ref={this.editor}
                         initState={initialState}
@@ -102,7 +113,7 @@ class RoosterReact extends React.PureComponent {
     }
 
     updateFormatState() {
-        getPlugins().formatState.updateFormatState();
+        this.pluginArray.getPlugins().formatState.updateFormatState();
     }
 
     // setIsRibbonShown(isShown) {

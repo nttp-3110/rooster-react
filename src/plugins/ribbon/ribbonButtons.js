@@ -139,6 +139,7 @@ const buttons = {
         title: 'Align left',
         image: require('./svg/alignleft.svg'),
         onClick: editor => setAlignment(editor, Alignment.Left),
+        // checked: (format, editor) => editor.queryElements('div', 1 /* OnSelection */, function (node) { console.log(node) })
         // checked: format => console.log(format)
     },
     alignCenter: {

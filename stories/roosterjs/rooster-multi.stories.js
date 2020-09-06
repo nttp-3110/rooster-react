@@ -1,7 +1,8 @@
 import React from 'react';
-import { Rooster } from './rooster';
+import { Rooster } from './rooster-multi';
+
 export default {
-    title: 'RoosterJS',
+    title: 'Multi RoosterJS ',
     component: Rooster
 };
 const Template = (args) => <Rooster {...args} />;
