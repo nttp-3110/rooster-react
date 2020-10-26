@@ -100,7 +100,7 @@ class Editor extends React.Component {
             //       })
             //     : null,
             customReplace: pluginList.customReplace ? new CustomReplacePlugin() : null,
-            entityPlugin: pluginList.entityPlugin ? new EntityPlugin() : null,
+            entityPlugin: pluginList.entityPlugin ? new EntityPlugin() : null
         };
         let plugins = [
             ...Object.keys(editorInstanceToggleablePlugins).map(

@@ -46,11 +46,11 @@ export default class PluginManage {
         return [
             allPlugins.ribbon,
             allPlugins.mathjax,
-            allPlugins.formatState,
-            allPlugins.editorOptions,
-            allPlugins.snapshot,
-            allPlugins.eventView,
-            allPlugins.api,
+            // allPlugins.formatState,
+            // allPlugins.editorOptions,
+            // allPlugins.snapshot,
+            // allPlugins.eventView,
+            // allPlugins.api,
         ];
     }
 }
